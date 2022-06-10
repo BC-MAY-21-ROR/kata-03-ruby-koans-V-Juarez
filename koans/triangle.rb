@@ -14,9 +14,27 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  :equilateral if a == b && b == c && a == c
-  :isosceles if (a == c) || (a == c) || (b == c)
-  :scalene
+  hyp, s1, s2 = if c > a || c > b
+						[c,a,b]
+					elsif b > a || b > c
+						[b,a,c]
+					else
+						[a,b,c]
+					end
+	
+	if a <= 0 || b <= 0 || c <= 0
+		raise TriangleError
+	elsif s1 + s2 <= hyp
+		raise TriangleError
+	end
+	
+	type = if hyp == s1 && hyp == s2
+				:equilateral
+			elsif hyp == s1 || hyp == s2
+				:isosceles
+			else
+				:scalene
+			end
 end
 
 # Error class used in part 2.  No need to change this code.
